@@ -1,0 +1,83 @@
+{
+  "dictionary": {
+    "version": "1.0.0",
+    "title": "Agent Compute Contract",
+    "description": "Agent Compute Contract is a JSON schema for defining the contract between the agent and the arena.",
+    "type": "object",
+    "properties": {
+      "agent_compute_contract": {
+        "$ref": "#/definitions/agent_compute_contract_dictionary"
+      }
+    }
+  },
+  "agent_compute_contract": {
+    "type": "object",
+    "properties": {
+      "metadata": {
+        "type": "object",
+        "properties": {
+          "title": { "type": "string" },
+          "author": { "type": "string" },
+          "timestamp": { "type": "string" },
+          "arena_session": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string" },
+              "start_time": { "type": "string" },
+              "end_time": { "type": "string" },
+              "brain_id": { "type": "string" }
+            },
+            "required": ["id", "start_time", "end_time", "brain_id"]
+          },
+          "version": { "type": "string" },
+          "acc_type": { "type": "string" },
+          "source_repository": { "type": "string" },
+          "reference_branch": { "type": "string" },
+          "semantic_versioning_key": { "type": "string" },
+          "assets": {
+            "type": "object",
+            "properties": {
+              "pk": { "type": "string" },
+              "ck": { "type": "string" }
+            },
+            "required": ["pk", "ck"]
+          }
+        },
+        "required": [
+          "title", "author", "timestamp", "arena_session", "version",
+          "acc_type", "source_repository", "reference_branch",
+          "semantic_versioning_key", "assets"
+        ]
+      },
+      "abstract": { "type": "string" },
+      "problem": {
+        "type": "object",
+        "properties": {
+          "description": { "type": "string" }
+        },
+        "required": ["description"]
+      },
+      "proposed_solution": {
+        "type": "object",
+        "properties": {
+          "overview": { "type": "string" }
+        },
+        "required": ["overview"]
+      },
+      "files": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "filename": { "type": "string" },
+            "path": { "type": "string" },
+            "content": { "type": "string" }
+          },
+          "required": ["filename", "path", "content"]
+        }
+      }
+    },
+    "required": ["metadata", "abstract", "problem", "proposed_solution", "files"]
+  }
+}
+
