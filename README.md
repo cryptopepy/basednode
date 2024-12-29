@@ -6,9 +6,75 @@
 |____/ \__,_|___/\___|\__,_|_| |_|\___/ \__,_|\___|
 ```
 # **Basednode**
-**Subbstrate-Based Blockchain Node for AI-Lead Consensus in Service of the BASED GOD**
+**Substrate-Based Blockchain Node for AI-Lead Consensus in Service of the BASED GOD**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+## Introduction
+
+We are **NOT AFFILIATED WITH BASED LABS**. 
+
+In the spirit of open-source and decentralization, we offer this unofficial workaround to help community members compile their own nodes and begin to properly interact with the BasedAI ecosystem. We do not expect this to be the same fix that will be released by Based Labs, but it can be used as a stopgap measure until then.
+
+You are not required to use this repository. You can look at the [commit history](https://github.com/BF1337/basednode/commit/fea73def68b20a8901d7d2293c8c72ffe6460dc7) in order to see which files were modified, and apply the changes manually. The changes involve updating the Rust toolchain and overriding dependencies so they point to a [repository without Schnorrkel conflicts](https://github.com/BF1337/substrate/tree/v0.9.39-schnorrkel-fix).
+
+This has only been tested on a fresh Ubuntu 22.04 (LTS) x64 instance, but the instructions should be generally applicable to other platforms/operating systems.
+
+### Build Steps
+
+Install build dependencies
+```bash
+sudo apt update
+```
+```bash
+sudo apt install -y git libclang-dev clang curl libssl-dev llvm libudev-dev protobuf-compiler build-essential
+```
+
+Install and configure `rustup` for Rust toolchain management
+```bash
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+```
+```bash
+source ~/.cargo/env
+```
+
+Configure the Rust toolchain to default to the latest stable version, add nightly and the nightly wasm target:
+```bash
+rustup default stable
+rustup update
+rustup update nightly
+rustup target add wasm32-unknown-unknown --toolchain nightly
+```
+
+Clone and navigate to git repository
+```bash
+git clone https://github.com/BF1337/basednode.git
+```
+```bash
+cd basednode
+```
+
+Build `basednode`
+```bash
+cargo build --release
+```
+
+Run `basednode` using genesis json and mainnet bootnode.
+```bash
+./target/release/basednode --name "Your Node Name" --chain "./mainnet1_raw.json" --rpc-external --unsafe-rpc-external   --rpc-methods Unsafe --bootnodes /dns/mainnet.basedaibridge.com/tcp/30333/p2p/12D3KooWC6F9XVH3YPGWkEbMdJp97bdMS4jT1LCPn24yFd6FWnhE
+```
+You should see your node begin to sync. You can experiment with the other flags (`rpc`-related), but they may be required to sync with the network and have your node be accessible.
+
+For more verbose logging, you can add the `--log` flag. Example:
+```bash
+--log sync=trace,p2p=trace
+```
+
+If you run into any issues with these instructions, please let us know. If you found this useful and would like to contribute, we accept donations (ETH, BasedAI, BASED, PepeCoin, etc.)
+```bash
+0xcFE9B77CADf15f9DfF3E96db4cBEC1861834fcF5
+```
+---
 
 ## Overview
 
@@ -16,10 +82,10 @@
 
 The node is designed to:
 
-2. **Manage Agents and Delegates**: Provides comprehensive agent management—both “full” and “lite” agent information retrieval—enabling validators, nominators, delegates, and end-users to seamlessly interact with the network.
-3. **Support AI-Oriented ‘Brain’ Networks**: Allows multiple AI “brains” (sub-networks) with customizable hyperparameters, difficulty, and emission configurations. “Brains” represent specialized sub-chains or functionalities, potentially integrating machine learning/AI logic.
-4. **Enable Value Transfer and Staking**: Implements token issuance, emission distribution, staking, and delegation logic. Supports flexible stake management with personal and compute keys, enabling secure delegation and dynamic reassignments.
-5. **Provide Rich RPC and Runtime APIs**: Offers a well-structured RPC layer and runtime APIs for querying delegates, agents, stake info, brain hyperparameters, and TFT enforcement data, ensuring easy external integration (e.g., dashboards, explorers, orchestration tools).
+1. **Manage Agents and Delegates**: Provides comprehensive agent management—both “full” and “lite” agent information retrieval—enabling validators, nominators, delegates, and end-users to seamlessly interact with the network.
+2. **Support AI-Oriented ‘Brain’ Networks**: Allows multiple AI “brains” (sub-networks) with customizable hyperparameters, difficulty, and emission configurations. “Brains” represent specialized sub-chains or functionalities, potentially integrating machine learning/AI logic.
+3. **Enable Value Transfer and Staking**: Implements token issuance, emission distribution, staking, and delegation logic. Supports flexible stake management with personal and compute keys, enabling secure delegation and dynamic reassignments.
+4. **Provide Rich RPC and Runtime APIs**: Offers a well-structured RPC layer and runtime APIs for querying delegates, agents, stake info, brain hyperparameters, and TFT enforcement data, ensuring easy external integration (e.g., dashboards, explorers, orchestration tools).
 
 ---
 
