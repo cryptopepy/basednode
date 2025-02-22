@@ -61,7 +61,8 @@ cargo build --release
 
 Run `basednode` using genesis json and mainnet bootnode.
 ```bash
-./target/release/basednode --name "Your Node Name" --chain "./mainnet1_raw.json" --rpc-external --unsafe-rpc-external   --rpc-methods Unsafe --bootnodes /dns/mainnet.basedaibridge.com/tcp/30333/p2p/12D3KooWC6F9XVH3YPGWkEbMdJp97bdMS4jT1LCPn24yFd6FWnhE
+./target/release/basednode --name "Your Node Name" --chain "./mainnet1_raw.json" --rpc-external --unsafe-rpc-external   --rpc-methods Unsafe --bootnodes /dns/mainnet.basedaibridge.com/tcp/30333/p2p/12D3KooWCQy4hiiA9tHxvQ2PPaSY3mUM6NkMnbsYf2v4FKbLAtUh
+
 ```
 You should see your node begin to sync. You can experiment with the other flags (`rpc`-related), but they may be required to sync with the network and have your node be accessible.
 
